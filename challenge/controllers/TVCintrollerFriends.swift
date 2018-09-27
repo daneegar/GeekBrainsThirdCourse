@@ -86,9 +86,9 @@ class TVCintrollerFriends: UITableViewController {
     
     @IBAction func addFriend(_ sender: Any) {
 //        var alertTextField = UITextField()
-//        
+//
 //        let alertForNameanItem = UIAlertController(title: "Add Friend", message: "Name the friend", preferredStyle: .alert)
-//        
+//
 //        let alertButtonPressed = UIAlertAction(title: "Add", style: .default) { (Alert) in
 //            if alertTextField.text != "" {
 //                self.friends.append(alertTextField.text!)
@@ -96,7 +96,7 @@ class TVCintrollerFriends: UITableViewController {
 //            self.tableView.reloadData()
 //        }
 //        alertForNameanItem.addAction(alertButtonPressed)
-//        
+//
 //        alertForNameanItem.addTextField { (AlertTextInput) in
 //            AlertTextInput.placeholder = "Here..."
 //            alertTextField = AlertTextInput
