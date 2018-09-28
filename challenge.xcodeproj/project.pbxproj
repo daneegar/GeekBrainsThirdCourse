@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3009E2586B20197214206875 /* Pods_challenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F731109AACF53F55F6F284 /* Pods_challenge.framework */; };
+		9200E366215CF7C10039B593 /* Singeltons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200E365215CF7C10039B593 /* Singeltons.swift */; };
 		9207B6F620D4CFD1007B3343 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9207B6F520D4CFD1007B3343 /* TabBarViewController.swift */; };
 		92382909212ECD740059F659 /* VCMyWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92382908212ECD740059F659 /* VCMyWall.swift */; };
 		9238290B212ECF830059F659 /* ModelPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9238290A212ECF830059F659 /* ModelPost.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		273E037F33111B3A9CF460D9 /* Pods-challenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-challenge.release.xcconfig"; path = "Pods/Target Support Files/Pods-challenge/Pods-challenge.release.xcconfig"; sourceTree = "<group>"; };
 		82F731109AACF53F55F6F284 /* Pods_challenge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_challenge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9200E365215CF7C10039B593 /* Singeltons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singeltons.swift; sourceTree = "<group>"; };
 		9207B6F520D4CFD1007B3343 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		92382908212ECD740059F659 /* VCMyWall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCMyWall.swift; sourceTree = "<group>"; };
 		9238290A212ECF830059F659 /* ModelPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPost.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				9238290A212ECF830059F659 /* ModelPost.swift */,
 				9272BDC420E9F97B00D73B22 /* ModelUser.swift */,
 				9272BDC620E9FA1200D73B22 /* ModelPhoto.swift */,
+				9200E365215CF7C10039B593 /* Singeltons.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 				TargetAttributes = {
 					9287D25A20D40C0200D8C86F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -250,7 +254,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-challenge/Pods-challenge-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-challenge/Pods-challenge-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -267,7 +271,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-challenge/Pods-challenge-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-challenge/Pods-challenge-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EC607547D49C859C5B6E3851 /* [CP] Check Pods Manifest.lock */ = {
@@ -300,6 +304,7 @@
 				92BDE50D20E1352C005BEB8F /* TVControllersAllGroups.swift in Sources */,
 				92BDE50720E1344D005BEB8F /* TVCintrollerFriends.swift in Sources */,
 				92BDE50920E13492005BEB8F /* CVControllerPhotos.swift in Sources */,
+				9200E366215CF7C10039B593 /* Singeltons.swift in Sources */,
 				9287D26120D40C0200D8C86F /* LoginViewController.swift in Sources */,
 				9243D15920E51CC500592102 /* LoginVK.swift in Sources */,
 				9207B6F620D4CFD1007B3343 /* TabBarViewController.swift in Sources */,
@@ -467,7 +472,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = denis.garifyanov.com.challenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -486,7 +491,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = denis.garifyanov.com.challenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

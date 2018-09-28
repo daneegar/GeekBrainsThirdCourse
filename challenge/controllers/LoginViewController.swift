@@ -31,14 +31,15 @@ class LoginViewController: UIViewController {
     //MARK - notification center
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboadWasShown), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.​​keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboadWasShown), name: NSNotification., object: <#T##Any?#>)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboadWasShown), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.​​keyboardWillBeHidden), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK - autorization
@@ -62,8 +63,8 @@ class LoginViewController: UIViewController {
     //MARK - keyboards events
     @objc func keyboadWasShown (notification: Notification) {
         let info = notification.userInfo! as NSDictionary
-        let kbSize = (info.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
-        let contentLnSets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0)
+        let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
+        let contentLnSets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
         
         self.ScrolView?.contentInset = contentLnSets
         self.ScrolView?.scrollIndicatorInsets = contentLnSets

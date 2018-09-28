@@ -21,15 +21,15 @@ override func viewDidLoad() {
         let tabBarViesCollections = viewControllers
             if let childViews = tabBarViesCollections?.first as? UINavigationController{
                 let catchedTable = childViews.viewControllers[0] as? TVCintrollerFriends
-                catchedTable?.token = self.token
+                catchedTable?.token = Session.instance.token
 
             if let childViews = tabBarViesCollections?[1] as? UINavigationController{
                 let catchedTable = childViews.viewControllers[0] as? TVControllerMyGroups
-                catchedTable?.token = self.token
+                catchedTable?.token = Session.instance.token
             }
                 if let childViews = tabBarViesCollections?[2]{
                     let catchedTable = childViews as? VCMyWall
-                    catchedTable?.token = self.token
+                    catchedTable?.token = Session.instance.token
                 }
                 
     }

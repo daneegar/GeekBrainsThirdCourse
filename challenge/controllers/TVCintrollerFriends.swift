@@ -11,16 +11,17 @@ import RealmSwift
 
 class TVCintrollerFriends: UITableViewController {
     var token: String? = ""
-    var friends: [ModelUser] = []
+    var friends: Results<ModelUser>!
     var realm = try! Realm()
+    var notificationToken: NotificationToken?
     
 
     override func viewDidLoad() {
         self.tableView.addSubview(self.refreshControl!)
         super.viewDidLoad()
-        loadDataFromLocalStorage()
-        
+        syncStores()
     }
+    
     //MARK: - load data methods
     func loadDataFromAPI(){
         guard let token = token else { return }
@@ -32,15 +33,29 @@ class TVCintrollerFriends: UITableViewController {
             }
         }
     }
-    func loadDataFromLocalStorage() {
-        let catchedFriends = Array(realm.objects(ModelUser.self))
-        friends = catchedFriends
+    
+    func syncStores() {
+        friends = realm.objects(ModelUser.self).sorted(byKeyPath: "lastName")
+        notificationToken = friends._observe { (changes) in
+            switch changes {
+            case .initial:
+                self.tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                self.tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                self.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                self.tableView.endUpdates()
+            case .error(let error):
+                print(error)
+            }
+        }
     }
     
     //MARK: - pull to refersh
     override lazy var refreshControl: UIRefreshControl? = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(TVCintrollerFriends.handleRefresh(_:)), for: UIControlEvents.valueChanged)
+        refreshControl.addTarget(self, action: #selector(TVCintrollerFriends.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         return refreshControl
     }()
     
@@ -72,6 +87,10 @@ class TVCintrollerFriends: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 76
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

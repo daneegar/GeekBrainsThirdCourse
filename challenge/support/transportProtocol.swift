@@ -42,7 +42,7 @@ class transportProtocol {
         task.resume()
     }
     //MARK: - Load list of my groups.
-    func loadMyGroups (completion: (([ModelGroup]?, Error?) -> Void)?){
+    func loadMyGroups (completion: ((Error?) -> Void)?){
         var urlConstructor = URLComponents()
         
         urlConstructor.scheme = "https"
@@ -60,6 +60,7 @@ class transportProtocol {
             if let error = error {
                 print("*************************")
                 print(error)
+                completion?(error)
                 return
             }
             if let data = data {
@@ -68,9 +69,7 @@ class transportProtocol {
                     let groups = json["response"]["items"].arrayValue.map { ModelGroup(json: $0)}
                     DispatchQueue.main.async {
                         self.saveData(someRealmArray: groups)
-                        completion?(groups, nil)
                     }
-                    
                 }
             }
             

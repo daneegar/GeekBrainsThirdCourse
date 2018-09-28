@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import RealmSwift
 
 class LoginVK: UIViewController {
    
@@ -58,10 +59,8 @@ class LoginVK: UIViewController {
 //MARK: - WKNavigationDelegate
 extension LoginVK: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        
-        guard let url = navigationResponse.response.url,
-            url.path == "/blank.html",
-            let fragment = url.fragment else {
+
+        guard let url = navigationResponse.response.url, url.path == "/blank.html", let fragment = url.fragment else {
                 decisionHandler(.allow)
                 return
         }
@@ -76,9 +75,12 @@ extension LoginVK: WKNavigationDelegate {
                 dict[key] = value
                 return dict
         }
-        
-        if let token = params["access_token"] {
+        let session = Session.instance
+        if let token = params["access_token"], let user_id = params["user_id"] {
             self.token = token
+            session.token = token
+            session.id = Int(user_id)!
+            print (session.id)
             performSegue(withIdentifier: "successLogin", sender: nil)
         }
         

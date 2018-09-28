@@ -10,38 +10,35 @@ import UIKit
 import RealmSwift
 
 class TVControllerMyGroups: UITableViewController {
-    //var listOfgroups: [String] = ["Denis", "Vasilivar", "Marina", "Alyona", "Tatyana"]
     var token: String? = ""
-    var listOfMyGroups: [ModelGroup] = []
+    var listOfMyGroups: Results<ModelGroup>!
     var realm = try! Realm()
-    
-    @IBAction func addGroup (_ segue: UIStoryboardSegue){
-//        if segue.identifier == "addGroup"{
-//            let segueTable = segue.source as! TVControllersAllGroups
-//            let selectedCell = segueTable.tableView.indexPathForSelectedRow
-//            let selectedGroup = segueTable.groups[(selectedCell?.row)!]
-//            if  !listOfgroups.contains(selectedGroup){
-//                listOfgroups.append(selectedGroup)
-//                self.tableView.reloadData()
-//            }
-//        }
-    }
+    var notificationToken: NotificationToken?
     
     //MARK: - Data methods
-    func loadDataFromLocalStorage(){
-        let catchedGroups = Array(realm.objects(ModelGroup.self))
-        listOfMyGroups = catchedGroups
+    func syncStores(){
+        listOfMyGroups = realm.objects(ModelGroup.self).sorted(byKeyPath: "name")
+        notificationToken = listOfMyGroups._observe { (changes) in
+            switch changes {
+            case .initial:
+                self.tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                self.tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                self.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                self.tableView.endUpdates()
+            case .error(let error):
+                print(error)
+            }
+        }
     }
     func loadDataFromAPI(){
         guard let token = self.token else {return}
         let JSONAction = transportProtocol(token)
-        JSONAction.loadMyGroups { (catchedGroups, error) in
+        JSONAction.loadMyGroups { (error) in
             if let error = error {
                 print(error)
-            }
-            if let listOfgroups = catchedGroups {
-                self.listOfMyGroups = listOfgroups
-                self.tableView?.reloadData()
             }
         }
     }
@@ -55,7 +52,8 @@ class TVControllerMyGroups: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadDataFromLocalStorage()
+        syncStores()
+        loadDataFromAPI()
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,6 +79,10 @@ class TVControllerMyGroups: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
     
